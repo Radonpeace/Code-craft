@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-const PREFIX = 'codepen-clone-'
+const PREFIX = 'codepen-clone-'//A constant PREFIX is defined to avoid key collisions in local storage by adding a unique prefix to each key.
 
 export default function useLocalStorage(key, initialValue) {
   const prefixedKey = PREFIX + key

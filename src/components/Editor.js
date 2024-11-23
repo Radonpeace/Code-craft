@@ -13,7 +13,7 @@ export default function Editor(props) {
     language,
     displayName,
     value,
-    onChange
+    onChange// 
   } = props
   const [open, setOpen] = useState(true)
 
