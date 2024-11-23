@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Editor from './Editor'
+import JSZip from 'jszip'
 import useLocalStorage from '../hooks/useLocalStorage'
 
 function App() {
@@ -19,32 +20,20 @@ function App() {
     document.body.removeChild(element);
   }
 
-  // Download files with content as separate files
+  // Download files as zip
   const downloadSeparateFiles = () => {
-    const elementHtml = document.createElement('a');
-    const fileHtml = new Blob([html], {type: 'text/html'});
-    elementHtml.href = URL.createObjectURL(fileHtml);
-    elementHtml.download = "index.html";
-    document.body.appendChild(elementHtml); 
-    elementHtml.click();
-
-    const elementCss = document.createElement('a');
-    const fileCss = new Blob([css], {type: 'text/css'});
-    elementCss.href = URL.createObjectURL(fileCss);
-    elementCss.download = "style.css";
-    document.body.appendChild(elementCss); 
-    elementCss.click();
-
-    const elementJs = document.createElement('a');
-    const fileJs = new Blob([js], {type: 'text/javascript'});
-    elementJs.href = URL.createObjectURL(fileJs);
-    elementJs.download = "script.js";
-    document.body.appendChild(elementJs);
-    elementJs.click();
-
-    document.body.removeChild(elementHtml);
-    document.body.removeChild(elementCss);
-    document.body.removeChild(elementJs);
+    const zip = new JSZip();
+    zip.file("index.html", html);
+    zip.file("style.css", css);
+    zip.file("script.js", js);
+    zip.generateAsync({type:"blob"}).then((content) => {
+      const element = document.createElement('a');
+      element.href = URL.createObjectURL(content);
+      element.download = "codes.zip";
+      document.body.appendChild(element); //firefox requires this
+      element.click();
+      document.body.removeChild(element);
+    });
   }
 
   useEffect(() => {
@@ -95,8 +84,8 @@ function App() {
           height="100%"
         />
       </div>
-      <button className="btn" onClick={downloadFiles}>Download All</button>
-      <button className="btn" onClick={downloadSeparateFiles}>Download Files</button>
+      <button className="btn" onClick={downloadFiles}>Download HTML</button>
+      <button className="btn" onClick={downloadSeparateFiles}>Download Zip</button>
     </div>
   )
 }
