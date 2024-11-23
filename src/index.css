@@ -29,6 +29,18 @@ body {
   overflow: hidden !important;
 }
 
+.block{
+  margin-bottom: 1rem;
+}
+
+.block .btn {
+  color: white;
+  background: hsl(225, 24%, 39%);
+  padding: 7px;
+  margin: 5px;
+  border-radius: 10px;
+}
+
 .expand-collapse-btn {
   margin-left: .5rem;
   background: none;
