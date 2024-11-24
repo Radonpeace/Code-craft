@@ -21,10 +21,16 @@ export default function Editor(props) {
     onChange(value)
   }
 
+  const CopyText = () => {
+    navigator.clipboard.writeText(value);
+    alert("Copied the text");
+  }
+
   return (
     <div className={`editor-container ${open ? '' : 'collapsed'}`}>
       <div className="editor-title">
         {displayName}
+        <button onClick={CopyText} >Copy</button>
         <button
           type="button"
           className="expand-collapse-btn"
